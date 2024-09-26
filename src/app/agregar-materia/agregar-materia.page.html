@@ -1,0 +1,68 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Agregar Materia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <form (ngSubmit)="agregarMateria()">
+      <ion-row>
+        <ion-col>
+          <ion-label>Id</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-input type="number" [(ngModel)]="materia.id" name ="id"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-label>Nombre de la materia</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-input type="text" [(ngModel)]="materia.nombre" name="nombre"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-label>Semestre</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-input type="text" [(ngModel)]="materia.semestre" name="semestre"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-label>Código</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-input type="number" [(ngModel)]="materia.codigo" name="codigo"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-label>Horario</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-input type="text" [(ngModel)]="materia.horario" name="horario"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-label>Observaciones</ion-label>
+        </ion-col>
+        <ion-col>
+          <ion-input type="text" [(ngModel)]="materia.observaciones" name="observaciones"></ion-input>
+        </ion-col>
+      </ion-row>
+
+      <ion-button (click)="agregarMateria()">Agregar Materia</ion-button> 
+      <ion-button (click)="clearMateria()">Limpiar Materia</ion-button> 
+    </form>
+  </ion-grid>
+</ion-content>

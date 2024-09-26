@@ -10,4 +10,12 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'agregar-materia',
+    loadComponent:() => import('./agregar-materia/agregar-materia.page').then((m)=>m.AgregarMateriaPage)
+  },
+  {
+    path: 'materia',
+    loadComponent: () => import('./materia/materia.page').then( m => m.MateriaPage)
+  }
 ];
