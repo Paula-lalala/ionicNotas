@@ -15,6 +15,10 @@ export const routes: Routes = [
     loadComponent:() => import('./agregar-materia/agregar-materia.page').then((m)=>m.AgregarMateriaPage)
   },
   {
+    path: 'editar-materia/:id',
+    loadComponent: ()=> import('./agregar-materia/agregar-materia.page').then((m)=>m.AgregarMateriaPage)
+  },
+  {
     path: 'materia',
     loadComponent: () => import('./materia/materia.page').then( m => m.MateriaPage)
   }
