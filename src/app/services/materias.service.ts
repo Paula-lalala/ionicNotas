@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { Materia } from '../models/materia';
+import { Materia, Nota } from '../models/materia';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 export class MateriaService {
   private materias: Materia[] = [];
   private ClaveStorage = 'materias';
+  private ClaveNotasStorage = 'notas';
 
   private materiasSubject = new BehaviorSubject<Materia[]>([]);
   materias$ = this.materiasSubject.asObservable();
@@ -54,6 +55,43 @@ export class MateriaService {
   async clearMaterias() {
     await this.storage.clear();
   }
+
+
+  async addNota(materiaId: number, nota: Nota): Promise<void> {
+    await this.loadMaterias();
+    
+    const materia = this.materias.find(m => m.id === materiaId);
+    
+    if (materia) {
+      if (!materia.notas) {
+        materia.notas = [];
+      }
+
+      nota.id = materia.notas.length > 0 ? materia.notas[materia.notas.length - 1].id + 1 : 1;
+
+      materia.notas.push(nota);
+      await this.updateMateria(materia);
+      this.materiasSubject.next(this.materias);
+    }
+  }
+
+  async getNotas(materiaId: number): Promise<Nota[]> {
+    await this.loadMaterias(); 
+    const materia = this.materias.find(m => m.id === materiaId);
+    return materia && materia.notas ? materia.notas : [];
+  }
+
+  async deleteNota(materiaId: number, notaId: number): Promise<void> {
+    await this.loadMaterias();
+    const materia = this.materias.find(m => m.id === materiaId);
+    
+    if (materia && materia.notas) {
+      materia.notas = materia.notas.filter((nota: Nota) => nota.id !== notaId);
+      await this.updateMateria(materia);
+      this.materiasSubject.next(this.materias);
+    }
+  }
+  
 }
 
 

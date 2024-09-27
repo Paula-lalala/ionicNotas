@@ -17,7 +17,7 @@
         <p>Horario: {{ materia.horario }}</p>
     <ion-button (click)="editarMateria(materia.id)">Modificar</ion-button>
     <ion-button color="danger" (click)="eliminarMateria(materia.id)">Eliminar</ion-button>
-    <ion-button >Notas</ion-button>
-    </ion-item>
+    <ion-button (click)="irNotas(materia.id)">Notas</ion-button>    
+  </ion-item>
   </ion-list>
 </ion-content>

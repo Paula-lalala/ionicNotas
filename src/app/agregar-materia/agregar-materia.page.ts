@@ -6,7 +6,7 @@ import { IonContent, IonHeader,
   IonLabel,IonItem,IonButton,
   IonInput,IonGrid,IonRow,
   IonCol } from '@ionic/angular/standalone';
-import { RouterModule, Router, Route, ActivatedRoute } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { MateriaService } from '../services/materias.service';
 import { Materia } from '../models/materia';
 

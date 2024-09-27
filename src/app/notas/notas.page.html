@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>notas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div>
+  <ion-button [routerLink]="['/agregar-nota', materiaId]">Agregar Nota</ion-button>
+</div>
+
+<ion-content>
+  <ion-list *ngIf="notas.length > 0; else noNotas">
+    <ion-item *ngFor="let nota of notas">
+      <ion-label>
+        <h2>{{ nota.descripcion }}</h2>
+        <p>Fecha de entrega: {{ nota.fechaEntrega }}</p>
+        <p>Nota: {{ nota.nota.toFixed(2) }}</p>
+        <p *ngIf="nota.observaciones">Observaciones: {{ nota.observaciones }}</p>
+        <ion-button color="danger" (click)="deleteNota(nota.id)">Eliminar</ion-button>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+<div>
+  <ion-button [routerLink]="['/materia']">Volver</ion-button>
+</div>
+
+  <ng-template #noNotas>
+    <p>No hay notas disponibles para esta materia.</p>
+  </ng-template>
+</ion-content>

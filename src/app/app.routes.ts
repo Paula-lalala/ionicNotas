@@ -21,5 +21,13 @@ export const routes: Routes = [
   {
     path: 'materia',
     loadComponent: () => import('./materia/materia.page').then( m => m.MateriaPage)
+  },
+  {
+    path: 'notas/:id',
+    loadComponent: () => import('./notas/notas.page').then( m => m.NotasPage)
+  },
+  {
+    path: 'agregar-nota/:id',
+    loadComponent: () => import('./agregar-nota/agregar-nota.page').then( m => m.AgregarNotaPage)
   }
 ];

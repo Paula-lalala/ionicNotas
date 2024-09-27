@@ -48,5 +48,12 @@ import { Subscription } from 'rxjs';
     }
 
     async editarMateria(id:number){
-      this.router.navigate(['/editar-materia', id]);    }
+      this.router.navigate(['/editar-materia', id]);    
+    }
+
+    async irNotas(id:number){
+      this.router.navigate(['/notas', id]);
+    }
+
+    
   }
