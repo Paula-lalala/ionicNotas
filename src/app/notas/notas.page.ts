@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton,
-   IonList, IonItem, IonLabel
- } from '@ionic/angular/standalone';
-import { ActivatedRoute, RouterModule, Router } from '@angular/router';
+   IonList, IonItem, IonLabel, IonItemDivider } from '@ionic/angular/standalone';
+import { ActivatedRoute, RouterModule, Router,RouterLink } from '@angular/router';
 import { MateriaService } from '../services/materias.service';
 import { Nota } from '../models/materia';
 
@@ -13,13 +12,14 @@ import { Nota } from '../models/materia';
   templateUrl: './notas.page.html',
   styleUrls: ['./notas.page.scss'],
   standalone: true,
-  imports: [IonButton, IonContent, IonHeader, IonTitle, 
+  imports: [IonItemDivider, IonButton, IonContent, IonHeader, IonTitle, 
     IonToolbar, CommonModule, FormsModule,
-  IonList,IonItem, RouterModule, IonLabel]
+  IonList,IonItem, RouterModule, IonLabel,RouterLink]
 })
 export class NotasPage implements OnInit {
   materiaId: number;
   notas: Nota[] = [];
+  cortes: { [key: number]: Nota[] } = { 1: [], 2: [], 3: [], 4: [] };
 
   constructor(private route: ActivatedRoute, private materiaService:MateriaService, private router:Router) { 
     this.materiaId = +this.route.snapshot.paramMap.get('id')!;
@@ -27,20 +27,29 @@ export class NotasPage implements OnInit {
   }
 
   ngOnInit() {
-    this.materiaId = +this.route.snapshot.paramMap.get('id')!;
-    this.loadNotas();
-    this.materiaService.materias$.subscribe(() => {
-      this.loadNotas();
+    this.route.params.subscribe(params => {
+        this.materiaId = +params['id'];
+        console.log('Materia ID:', this.materiaId);
     });
-  }
+}
 
   async loadNotas() {
     this.notas = await this.materiaService.getNotas(this.materiaId);
+    this.cortes = { 1: [], 2: [], 3: [], 4: [] };
+    this.notas.forEach(nota => {
+      if (nota.corte >= 1 && nota.corte <= 4) {
+        this.cortes[nota.corte].push(nota);
+      }
+    });
   }
 
   async deleteNota(notaId: number) {
     await this.materiaService.deleteNota(this.materiaId, notaId);
     this.loadNotas();
+  }
+
+  editNota(notaId: number) {
+    this.router.navigate(['/editar-nota', { materiaId: this.materiaId, notaId }]);
   }
 
   async volver(){

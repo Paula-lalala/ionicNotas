@@ -4,6 +4,7 @@ export interface Nota {
   descripcion: string;
   nota: number;
   observaciones?: string;
+  corte: number;
 }
 
 export interface Materia {

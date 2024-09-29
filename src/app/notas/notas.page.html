@@ -1,31 +1,30 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>notas</ion-title>
+    <ion-title>Notas</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<div>
-  <ion-button [routerLink]="['/agregar-nota', materiaId]">Agregar Nota</ion-button>
-</div>
-
 <ion-content>
-  <ion-list *ngIf="notas.length > 0; else noNotas">
-    <ion-item *ngFor="let nota of notas">
-      <ion-label>
-        <h2>{{ nota.descripcion }}</h2>
-        <p>Fecha de entrega: {{ nota.fechaEntrega }}</p>
-        <p>Nota: {{ nota.nota.toFixed(2) }}</p>
-        <p *ngIf="nota.observaciones">Observaciones: {{ nota.observaciones }}</p>
-        <ion-button color="danger" (click)="deleteNota(nota.id)">Eliminar</ion-button>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-button [routerLink]="['/agregar-nota', materiaId]">Agregar Nota</ion-button>
+  <div *ngFor="let corte of [1, 2, 3, 4]">
+    <h2>{{ corte }}° Corte</h2>
+    <ion-list *ngIf="cortes[corte].length > 0; else noNotas">
+      <ion-item *ngFor="let nota of cortes[corte]">
+        <ion-label>
+          <h2>{{ nota.descripcion }}</h2>
+          <p>Fecha: {{ nota.fechaEntrega }}</p>
+          <p>Nota: {{ nota.nota }}</p>
+          <p>Observaciones: {{ nota.observaciones }}</p>
+        </ion-label>
+        <ion-button (click)="editNota(nota.id)" color="primary">Editar</ion-button>
+        <ion-button (click)="deleteNota(nota.id)" color="danger">Eliminar</ion-button>
+      </ion-item>
+    </ion-list>
+    <ng-template #noNotas>
+      <p>No hay notas en este corte.</p>
+    </ng-template>
+  </div>
 
-<div>
-  <ion-button [routerLink]="['/materia']">Volver</ion-button>
-</div>
 
-  <ng-template #noNotas>
-    <p>No hay notas disponibles para esta materia.</p>
-  </ng-template>
 </ion-content>
+

@@ -29,5 +29,9 @@ export const routes: Routes = [
   {
     path: 'agregar-nota/:id',
     loadComponent: () => import('./agregar-nota/agregar-nota.page').then( m => m.AgregarNotaPage)
+  },
+  {
+    path: 'editar-nota/:materiaId/:notaId',
+    loadComponent: () => import('./agregar-nota/agregar-nota.page').then((m) => m.AgregarNotaPage)
   }
 ];

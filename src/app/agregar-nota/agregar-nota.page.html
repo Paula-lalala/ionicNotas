@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="agregarNota()">
+  <form (ngSubmit)="saveNota()">
     <ion-item>
       <ion-label>Fecha de Entrega</ion-label>
       <ion-input type="date" [(ngModel)]="nota.fechaEntrega" name="fechaEntrega" required></ion-input>
@@ -24,6 +24,16 @@
     <ion-item>
       <ion-label>Observaciones</ion-label>
       <ion-input [(ngModel)]="nota.observaciones" name="observaciones"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Corte</ion-label>
+      <ion-select [(ngModel)]="nota.corte" name="corte" required>
+        <ion-select-option value="1">1 Corte</ion-select-option>
+        <ion-select-option value="2">2 Corte</ion-select-option>
+        <ion-select-option value="3">3 Corte</ion-select-option>
+        <ion-select-option value="4">4 Corte</ion-select-option>
+      </ion-select>
     </ion-item>
 
     <ion-button expand="full" type="submit">Guardar Nota</ion-button>
