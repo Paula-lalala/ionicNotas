@@ -5,7 +5,7 @@ import { IonContent, IonHeader,
   IonTitle, IonToolbar,IonList,
   IonLabel,IonItem,IonButton,
   IonInput,IonGrid,IonRow,
-  IonCol } from '@ionic/angular/standalone';
+  IonCol,IonButtons, IonMenuButton } from '@ionic/angular/standalone';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { MateriaService } from '../services/materias.service';
 import { Materia } from '../models/materia';
@@ -20,7 +20,8 @@ import { Materia } from '../models/materia';
     CommonModule,RouterModule,
     IonList,IonItem,IonLabel, 
     IonButton, IonInput, IonCol, 
-    IonGrid, IonRow, FormsModule
+    IonGrid, IonRow, FormsModule,
+    IonButtons, IonMenuButton
 ]
 })
 export class AgregarMateriaPage implements OnInit{

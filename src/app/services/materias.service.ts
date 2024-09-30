@@ -160,9 +160,9 @@ async saveMateria(materia: Materia): Promise<void> {
 }
 
 async verificarEstadoMateria(materiaId: number): Promise<string> {
-  const notas = await this.getNotas(materiaId); // Suponiendo que tienes un método para obtener las notas
+  const notas = await this.getNotas(materiaId);
   if (notas.length === 0) {
-    return 'Sin notas'; // Mensaje cuando no hay notas
+    return 'Sin notas';
   }
 
   const promedioFinal = await this.calcularPromedioFinal(materiaId);

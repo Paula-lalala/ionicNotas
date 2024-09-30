@@ -2,11 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,
-IonList, IonItem, IonButton, IonLabel, IonSearchbar } from '@ionic/angular/standalone';
+IonList, IonItem, IonButton, IonLabel, IonSearchbar,IonMenu,
+IonButtons, IonMenuButton } from '@ionic/angular/standalone';
 import { MateriaService } from '../services/materias.service';
 import { Materia } from '../models/materia';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MenuComponent } from '../menu/menu.component';
 
 
 @Component({
@@ -16,7 +18,8 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [IonLabel, IonContent, IonHeader, IonTitle, 
     IonToolbar, CommonModule, FormsModule,
-    IonItem, IonList, IonButton, IonSearchbar]
+    IonItem, IonList, IonButton, IonSearchbar,IonMenu, MenuComponent,
+    IonButtons, IonMenuButton]
   })
   export class MateriaPage implements OnInit, OnDestroy{
     materias: Materia[] = [];
@@ -32,7 +35,7 @@ import { Subscription } from 'rxjs';
     ngOnInit() {
       this.materiaService.materias$.subscribe(async (materias) => {
         this.materias = materias;
-        this.materiasFiltradas = this.materias; // Inicialmente muestra todas las materias
+        this.materiasFiltradas = this.materias;
         if (this.estados.length === 0 || this.estados.length !== materias.length) {
           this.estados = await Promise.all(materias.map(materia => 
             this.materiaService.verificarEstadoMateria(materia.id)
