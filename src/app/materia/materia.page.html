@@ -1,14 +1,19 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Materias</ion-title>
-
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="filtrarMaterias()"
+      placeholder="Buscar materia o nota"
+      debounce="300"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 <ion-button (click)="crearMateria()">Agregar Materia</ion-button>  
   <ion-list>
-    <ion-item *ngFor="let materia of materias; let i = index">
+    <ion-item *ngFor="let materia of materiasFiltradas; let i = index">
       <ion-label>
         <h2>{{ materia.nombre }}</h2>
         <p>Estado: {{ estados[i] }}</p>

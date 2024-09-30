@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,
-IonList, IonItem, IonButton, IonLabel, IonButtons } from '@ionic/angular/standalone';
+IonList, IonItem, IonButton, IonLabel, IonSearchbar } from '@ionic/angular/standalone';
 import { MateriaService } from '../services/materias.service';
 import { Materia } from '../models/materia';
 import { Router } from '@angular/router';
@@ -14,28 +14,38 @@ import { Subscription } from 'rxjs';
   templateUrl: './materia.page.html',
   styleUrls: ['./materia.page.scss'],
   standalone: true,
-  imports: [IonButtons, IonLabel, IonContent, IonHeader, IonTitle, 
+  imports: [IonLabel, IonContent, IonHeader, IonTitle, 
     IonToolbar, CommonModule, FormsModule,
-    IonItem, IonList, IonButton]
+    IonItem, IonList, IonButton, IonSearchbar]
   })
   export class MateriaPage implements OnInit, OnDestroy{
     materias: Materia[] = [];
     subscription: Subscription = new Subscription;
     estados: string[] = [];
+    searchTerm: string = '';
+    materiasFiltradas: Materia[] = [];
+    
   
     constructor(private materiaService: MateriaService, private router:Router) {
     }
 
     ngOnInit() {
-      this.subscription = this.materiaService.materias$.subscribe(
-        async (materias) => {
-          this.materias = materias;
-          if (this.estados.length === 0 || this.estados.length !== materias.length) {
-            this.estados = await Promise.all(materias.map(materia => 
-              this.materiaService.verificarEstadoMateria(materia.id)
-            ));
-          }
+      this.materiaService.materias$.subscribe(async (materias) => {
+        this.materias = materias;
+        this.materiasFiltradas = this.materias; // Inicialmente muestra todas las materias
+        if (this.estados.length === 0 || this.estados.length !== materias.length) {
+          this.estados = await Promise.all(materias.map(materia => 
+            this.materiaService.verificarEstadoMateria(materia.id)
+          ));
         }
+      });
+    }
+  
+    filtrarMaterias() {
+      const term = this.searchTerm.toLowerCase();
+      this.materiasFiltradas = this.materias.filter(materia => 
+        materia.nombre.toLowerCase().includes(term) ||
+        (materia.notas && materia.notas.some(nota => nota.descripcion.toLowerCase().includes(term)))
       );
     }
   
@@ -60,6 +70,5 @@ import { Subscription } from 'rxjs';
     async irNotas(id:number){
       this.router.navigate(['/notas', id]);
     }
-
     
   }
