@@ -61,10 +61,18 @@ import { MenuComponent } from '../menu/menu.component';
     async crearMateria(){
       this.router.navigate(['/agregar-materia']);    }
 
-    async eliminarMateria(id:number){
-      await this.materiaService.deleteMateria(id);
-      this.materias = await this.materiaService.getMaterias();
-    }
+      async eliminarMateria(id: number) {
+        const notas = await this.materiaService.getNotas(id);
+        if (notas.length > 0) {
+          alert('No puede eliminar esta materia debido a que hay notas registradas.');
+          return;
+        }
+        const confirm = window.confirm('¿Está seguro de que desea eliminar esta materia?');
+        if (confirm) {
+          await this.materiaService.deleteMateria(id);
+          this.materias = await this.materiaService.getMaterias();
+        }
+      }
 
     async editarMateria(id:number){
       this.router.navigate(['/editar-materia', id]);    

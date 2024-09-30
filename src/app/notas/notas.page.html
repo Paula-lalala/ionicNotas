@@ -1,16 +1,19 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title>Notas</ion-title>
-    <ion-searchbar
-      [(ngModel)]="searchTerm"
-      (ionInput)="filtrarNotas()"
-      placeholder="Buscar nota"
-      debounce="300"
-    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-searchbar
+  [(ngModel)]="searchTerm"
+  (ionInput)="filtrarNotas()"
+  placeholder="Buscar nota"
+  debounce="300"
+></ion-searchbar>
   <ion-button [routerLink]="['/agregar-nota', materiaId]">Agregar Nota</ion-button>
   <div *ngFor="let corte of [1, 2, 3, 4]">
     <h2>{{ corte }}° Corte</h2>

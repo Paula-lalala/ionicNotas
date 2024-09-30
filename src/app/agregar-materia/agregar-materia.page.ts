@@ -47,12 +47,21 @@ export class AgregarMateriaPage implements OnInit{
   }
 
   agregarMateria() {
+    if (!this.validarCampos()) {
+      alert('Por favor, llene todos los campos obligatorios.');
+      return;
+    }
     if (this.isEditMode) {
       this.materiaService.updateMateria(this.materia);
     } else {
       this.materiaService.addMateria(this.materia);
     }
-    this.reiniciarForm();  }
+    this.reiniciarForm();
+  }
+
+  validarCampos(): boolean {
+      return this.materia.nombre !== '' && this.materia.semestre > 0 && this.materia.codigo > 0 && this.materia.horario !== '';
+  }
 
   reiniciarForm(){
     this.router.navigate(['/materia']);

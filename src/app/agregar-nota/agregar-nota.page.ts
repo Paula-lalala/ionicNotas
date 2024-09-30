@@ -2,7 +2,7 @@ import { Component, NgModule, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, 
-  IonToolbar, IonItem, IonLabel, IonButton, IonInput, IonSelectOption,IonBackdrop,IonSelect } from '@ionic/angular/standalone';
+  IonToolbar, IonItem, IonLabel, IonButton, IonInput, IonSelectOption,IonBackdrop,IonSelect, IonButtons,IonMenuButton } from '@ionic/angular/standalone';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MateriaService } from '../services/materias.service';
 import { Nota } from '../models/materia';
@@ -15,7 +15,7 @@ import { Nota } from '../models/materia';
   imports: [IonContent, IonHeader, IonTitle, 
     IonToolbar, CommonModule, FormsModule,
   IonButton, IonItem, IonLabel, IonInput,
-IonSelectOption, IonBackdrop,IonSelect],
+IonSelectOption, IonBackdrop,IonSelect, IonButtons, IonMenuButton],
 })
 export class AgregarNotaPage implements OnInit{
   materiaId!: number;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton,
-   IonList, IonItem, IonLabel, IonItemDivider,IonSearchbar } from '@ionic/angular/standalone';
+   IonList, IonItem, IonLabel, IonItemDivider,IonSearchbar, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
 import { ActivatedRoute, RouterModule, Router,RouterLink } from '@angular/router';
 import { MateriaService } from '../services/materias.service';
 import { Nota } from '../models/materia';
@@ -14,7 +14,7 @@ import { Nota } from '../models/materia';
   standalone: true,
   imports: [IonItemDivider, IonButton, IonContent, IonHeader, IonTitle, 
     IonToolbar, CommonModule, FormsModule,
-  IonList,IonItem, RouterModule, IonLabel,RouterLink, IonSearchbar ]
+  IonList,IonItem, RouterModule, IonLabel,RouterLink, IonSearchbar, IonButtons, IonMenuButton ]
 })
 export class NotasPage implements OnInit {
   materiaId: number;
