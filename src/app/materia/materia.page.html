@@ -1,23 +1,23 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-title>Materias</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
-<div>
-  <ion-button (click)="crearMateria()">Crear</ion-button>
-</div>
-
 <ion-content>
+<ion-button (click)="crearMateria()">Agregar Materia</ion-button>  
   <ion-list>
-    <ion-item *ngFor="let materia of materias">
+    <ion-item *ngFor="let materia of materias; let i = index">
+      <ion-label>
         <h2>{{ materia.nombre }}</h2>
-        <p>Id: {{ materia.id }}</p>
-        <p>Código: {{ materia.codigo }}</p>
-        <p>Horario: {{ materia.horario }}</p>
-    <ion-button (click)="editarMateria(materia.id)">Modificar</ion-button>
-    <ion-button color="danger" (click)="eliminarMateria(materia.id)">Eliminar</ion-button>
-    <ion-button (click)="irNotas(materia.id)">Notas</ion-button>    
-  </ion-item>
+        <p>Estado: {{ estados[i] }}</p>
+      </ion-label>
+      <ion-button (click)="irNotas(materia.id)">Ver Notas</ion-button>
+      <ion-button (click)="editarMateria(materia.id)">Editar</ion-button>
+      <ion-button (click)="eliminarMateria(materia.id)">Eliminar</ion-button>
+    </ion-item>
   </ion-list>
+
 </ion-content>
+

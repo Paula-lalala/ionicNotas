@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar,
-IonList, IonItem, IonButton } from '@ionic/angular/standalone';
+IonList, IonItem, IonButton, IonLabel, IonButtons } from '@ionic/angular/standalone';
 import { MateriaService } from '../services/materias.service';
 import { Materia } from '../models/materia';
 import { Router } from '@angular/router';
@@ -14,21 +14,27 @@ import { Subscription } from 'rxjs';
   templateUrl: './materia.page.html',
   styleUrls: ['./materia.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, 
+  imports: [IonButtons, IonLabel, IonContent, IonHeader, IonTitle, 
     IonToolbar, CommonModule, FormsModule,
     IonItem, IonList, IonButton]
   })
   export class MateriaPage implements OnInit, OnDestroy{
     materias: Materia[] = [];
     subscription: Subscription = new Subscription;
+    estados: string[] = [];
   
     constructor(private materiaService: MateriaService, private router:Router) {
     }
 
     ngOnInit() {
       this.subscription = this.materiaService.materias$.subscribe(
-        (materias) => {
+        async (materias) => {
           this.materias = materias;
+          if (this.estados.length === 0 || this.estados.length !== materias.length) {
+            this.estados = await Promise.all(materias.map(materia => 
+              this.materiaService.verificarEstadoMateria(materia.id)
+            ));
+          }
         }
       );
     }

@@ -15,4 +15,6 @@ export interface Materia {
     horario: string;
     observaciones?: string;
     notas?: Nota[];
+    promedioFinal?: number; 
+    estado?: string;
   }
