@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Agregar Nota</ion-title>
+    <ion-title>{{ isEditing ? 'Editar Nota' : 'Agregar Nota' }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -39,3 +39,4 @@
     <ion-button expand="full" type="submit">Guardar Nota</ion-button>
   </form>
 </ion-content>
+

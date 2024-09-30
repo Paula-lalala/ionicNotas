@@ -66,24 +66,18 @@ export class MateriaService {
 
   // Añadir nota
   async addNota(materiaId: number, nota: Nota): Promise<void> {
-    await this.loadMaterias();
-    
-    const materia = this.materias.find(m => m.id === materiaId);
-    
+    await this.loadMaterias(); 
+    const materia = this.materias.find(m => m.id === materiaId); 
     if (materia) {
       if (!materia.notas) {
         materia.notas = [];
       }
-
       nota.id = materia.notas.length > 0 ? materia.notas[materia.notas.length - 1].id + 1 : 1;
-
       materia.notas.push(nota);
       await this.updateMateria(materia);
       this.materiasSubject.next(this.materias);
     }
   }
-
-
 
   async getNotas(id: number): Promise<Nota[]> {
     await this.loadMaterias(); 
@@ -94,7 +88,6 @@ export class MateriaService {
   async updateNota(id: number, nota: Nota): Promise<void> {
     await this.loadMaterias();
     const materia = this.materias.find(m => m.id === id);
-    
     if (materia && materia.notas) {
         const notaIndex = materia.notas.findIndex(n => n.id === nota.id);
         
@@ -106,8 +99,6 @@ export class MateriaService {
     }
 }
 
-
-  // Eliminar nota
   async deleteNota(materiaId: number, notaId: number): Promise<void> {
     const materia = this.materias.find(m => m.id === materiaId);
 

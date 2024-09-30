@@ -17,9 +17,9 @@ import { Nota } from '../models/materia';
   IonButton, IonItem, IonLabel, IonInput,
 IonSelectOption, IonBackdrop,IonSelect],
 })
-export class AgregarNotaPage{
+export class AgregarNotaPage implements OnInit{
   materiaId!: number;
-  notaId?: number;
+  notaId: number;
   nota: Nota = {
     id: 0,
     fechaEntrega: '',
@@ -30,15 +30,21 @@ export class AgregarNotaPage{
   };
   isEditing = false;
 
-  constructor(private materiaService: MateriaService,private router: Router,private route: ActivatedRoute) {
-    this.materiaId = +this.route.snapshot.paramMap.get('id')!;
+  constructor(private materiaService: MateriaService, private router: Router, private route: ActivatedRoute) {
+    this.materiaId = +this.route.snapshot.paramMap.get('materiaId')!;
+    this.notaId = +this.route.snapshot.paramMap.get('notaId')!;
   }
 
+  ngOnInit(): void {
+    if (this.notaId) {
+      this.isEditing = true;
+      this.loadNota(this.notaId);
+    }
+  }
 
   async loadNota(notaId: number) {
     const notas = await this.materiaService.getNotas(this.materiaId);
     const nota = notas.find(n => n.id === notaId);
-
     if (nota) {
       this.nota = { ...nota };
     }
@@ -47,12 +53,12 @@ export class AgregarNotaPage{
   async saveNota() {
     console.log('Guardando Nota:', this.nota);
     if (this.isEditing) {
-        await this.materiaService.updateNota(this.materiaId, this.nota);
+      await this.materiaService.updateNota(this.materiaId, this.nota);
     } else {
-        await this.materiaService.addNota(this.materiaId, this.nota);
-        this.router.navigate(['/notas', this.materiaId]);
+      await this.materiaService.addNota(this.materiaId, this.nota);
     }
-}
+    this.router.navigate(['/notas', this.materiaId]);
+  }
 
   async volver() {
     this.router.navigate(['/notas', this.materiaId]);

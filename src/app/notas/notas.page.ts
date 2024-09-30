@@ -28,10 +28,11 @@ export class NotasPage implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-        this.materiaId = +params['id'];
-        console.log('Materia ID:', this.materiaId);
+      this.materiaId = +params['id'];
+      console.log('Materia ID:', this.materiaId);
+      this.loadNotas();
     });
-}
+  }
 
   async loadNotas() {
     this.notas = await this.materiaService.getNotas(this.materiaId);
@@ -49,8 +50,7 @@ export class NotasPage implements OnInit {
   }
 
   editNota(notaId: number) {
-    this.router.navigate(['/editar-nota', { materiaId: this.materiaId, notaId }]);
-  }
+    this.router.navigate(['/editar-nota', this.materiaId, notaId]);  }
 
   async volver(){
     this.router.navigate(['/materia']);
