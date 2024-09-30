@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonButton,IonLabel,IonList, IonButtons } from '@ionic/angular/standalone';
+import { RouterModule,Router } from '@angular/router';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonButton,IonLabel, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
 
 
 @Component({
@@ -8,8 +8,13 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonButton,IonLabe
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, IonButton, IonItem, IonLabel, IonList, IonButtons, RouterModule],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, 
+    IonButton, IonItem, IonLabel, IonButtons, RouterModule, IonMenuButton],
 })
 export class HomePage {
-  constructor() {}
+  constructor(private router: Router) {}
+
+  irAMaterias() {
+    this.router.navigate(['/materia']);
+  }
 }

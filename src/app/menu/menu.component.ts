@@ -21,6 +21,11 @@ export class MenuComponent {
     this.menuCtrl.close('main-menu');
   }
 
+  irInicio() {
+    this.router.navigate(['/home']);
+    this.menuCtrl.close('main-menu');
+  }
+
   irAgregarMateria() {
     this.router.navigate(['/agregar-materia']);
     this.menuCtrl.close('main-menu');
