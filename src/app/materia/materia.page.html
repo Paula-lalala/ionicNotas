@@ -16,7 +16,7 @@
     <ion-item *ngFor="let materia of materiasFiltradas; let i = index">
       <ion-label>
         <h2>{{ materia.nombre }}</h2>
-        <p>Estado: {{ estados[i] }}</p>
+        <p>Estado: {{ estados[i] || 'Calculando...' }}</p>       
       </ion-label>
       <ion-button (click)="irNotas(materia.id)">Ver Notas</ion-button>
       <ion-button (click)="editarMateria(materia.id)">Editar</ion-button>
