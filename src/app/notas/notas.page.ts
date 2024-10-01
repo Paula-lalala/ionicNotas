@@ -65,7 +65,6 @@ export class NotasPage implements OnInit {
       nota.descripcion.toLowerCase().includes(term)
     );
 
-    // Agrupamos las notas filtradas por corte
     this.cortes = { 1: [], 2: [], 3: [], 4: [] };
     this.notasFiltradas.forEach(nota => {
       if (nota.corte >= 1 && nota.corte <= 4) {

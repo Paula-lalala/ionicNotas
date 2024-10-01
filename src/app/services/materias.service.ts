@@ -39,9 +39,15 @@ export class MateriaService {
   }
 
   // Añadir materia
-  async addMateria(materia: Materia) {
+  async addMateria(materia: Materia): Promise<boolean> {
+    const materias = await this.getMaterias();
+    const idRepetido = materias.some(m => m.id === materia.id);
+    if (idRepetido) {
+      return false; 
+    }
     this.materias.push(materia);
     await this.updateStorage();
+    return true; 
   }
 
   // Actualizar materia

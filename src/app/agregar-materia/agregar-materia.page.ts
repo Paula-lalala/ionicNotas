@@ -5,7 +5,8 @@ import { IonContent, IonHeader,
   IonTitle, IonToolbar,IonList,
   IonLabel,IonItem,IonButton,
   IonInput,IonGrid,IonRow,
-  IonCol,IonButtons, IonMenuButton } from '@ionic/angular/standalone';
+  IonCol,IonButtons, IonMenuButton, 
+  AlertController } from '@ionic/angular/standalone';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { MateriaService } from '../services/materias.service';
 import { Materia } from '../models/materia';
@@ -36,7 +37,7 @@ export class AgregarMateriaPage implements OnInit{
 
   isEditMode = false;
 
-  constructor(private materiaService: MateriaService, private router:Router, private route:ActivatedRoute) {}
+  constructor(private materiaService: MateriaService, private router:Router, private route:ActivatedRoute, private alertController: AlertController) {}
 
   async ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));    if (id) {
@@ -46,15 +47,15 @@ export class AgregarMateriaPage implements OnInit{
     }
   }
 
-  agregarMateria() {
+  async agregarMateria() {
     if (!this.validarCampos()) {
-      alert('Por favor, llene todos los campos obligatorios.');
+      await this.mostrarAlerta('Error', 'Por favor, llene todos los campos obligatorios.');
       return;
     }
-    if (this.isEditMode) {
-      this.materiaService.updateMateria(this.materia);
-    } else {
-      this.materiaService.addMateria(this.materia);
+    const materiaAñadida = await this.materiaService.addMateria(this.materia);
+    if (!materiaAñadida) {
+      await this.mostrarAlerta('Error', 'El ID ya existe. Por favor, elija un ID diferente.');
+      return;
     }
     this.reiniciarForm();
   }
@@ -70,5 +71,14 @@ export class AgregarMateriaPage implements OnInit{
 
   clearMateria(){
     this.materiaService.clearMaterias()
+  }
+
+  async mostrarAlerta(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+    await alert.present();
   }
 }
