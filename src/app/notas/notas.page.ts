@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton,
-   IonList, IonItem, IonLabel, IonItemDivider,IonSearchbar, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
+   IonList, IonItem, IonLabel, IonItemDivider,IonSearchbar, IonButtons, IonMenuButton,AlertController } from '@ionic/angular/standalone';
 import { ActivatedRoute, RouterModule, Router,RouterLink } from '@angular/router';
 import { MateriaService } from '../services/materias.service';
 import { Nota } from '../models/materia';
@@ -23,7 +23,7 @@ export class NotasPage implements OnInit {
   searchTerm: string = '';
   notasFiltradas: Nota[] = [];
 
-  constructor(private route: ActivatedRoute, private materiaService:MateriaService, private router:Router) { 
+  constructor(private route: ActivatedRoute, private materiaService:MateriaService, private router:Router, private alertController: AlertController) { 
     this.materiaId = +this.route.snapshot.paramMap.get('id')!;
     this.loadNotas();
   }
@@ -48,8 +48,32 @@ export class NotasPage implements OnInit {
   }
 
   async deleteNota(notaId: number) {
-    await this.materiaService.deleteNota(this.materiaId, notaId);
-    this.loadNotas();
+    const confirm = await this.mostrarAlertaConfirmacion('Confirmar eliminación', '¿Está seguro de que desea eliminar esta nota?');
+    if (confirm) {
+      await this.materiaService.deleteNota(this.materiaId, notaId);
+      this.loadNotas();    
+    }
+  }
+
+  async mostrarAlertaConfirmacion(header: string, message: string): Promise<boolean> {
+    return new Promise(async (resolve) => {
+      const alert = await this.alertController.create({
+        header,
+        message,
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            handler: () => resolve(false)
+          },
+          {
+            text: 'Eliminar',
+            handler: () => resolve(true)
+          }
+        ]
+      });
+      await alert.present();
+    });
   }
 
   editNota(notaId: number) {

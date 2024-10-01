@@ -59,7 +59,8 @@ import { MenuComponent } from '../menu/menu.component';
     }
 
     async crearMateria(){
-      this.router.navigate(['/agregar-materia']);    }
+      this.router.navigate(['/agregar-materia']);    
+    }
 
       async eliminarMateria(id: number) {
         const notas = await this.materiaService.getNotas(id);

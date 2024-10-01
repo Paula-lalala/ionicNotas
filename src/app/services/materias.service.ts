@@ -137,7 +137,7 @@ export class MateriaService {
             const promedioCorte = sumaNotas / notasCorte.length;
             promedios.push(promedioCorte);
         } else {
-            promedios.push(0); // Si no hay notas, el promedio es 0
+            promedios.push(0);
         }
     }
     const promedioFinal = (promedios[0] * 0.2) + (promedios[1] * 0.2) + (promedios[2] * 0.2) + (promedios[3] * 0.4);
