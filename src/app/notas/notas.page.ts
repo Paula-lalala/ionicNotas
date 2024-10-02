@@ -2,19 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton,
-   IonList, IonItem, IonLabel, IonItemDivider,IonSearchbar, IonButtons, IonMenuButton,AlertController } from '@ionic/angular/standalone';
+   IonList, IonItem, IonLabel, IonItemDivider,IonSearchbar, IonButtons, IonMenuButton,AlertController, 
+   IonAccordionGroup, IonAccordion } from '@ionic/angular/standalone';
 import { ActivatedRoute, RouterModule, Router,RouterLink } from '@angular/router';
 import { MateriaService } from '../services/materias.service';
-import { Nota } from '../models/materia';
+import { Nota, Materia } from '../models/materia';
 
 @Component({
   selector: 'app-notas',
   templateUrl: './notas.page.html',
   styleUrls: ['./notas.page.scss'],
   standalone: true,
-  imports: [IonItemDivider, IonButton, IonContent, IonHeader, IonTitle, 
+  imports: [IonAccordionGroup, IonItemDivider, IonButton, IonContent, IonHeader, IonTitle, 
     IonToolbar, CommonModule, FormsModule,
-  IonList,IonItem, RouterModule, IonLabel,RouterLink, IonSearchbar, IonButtons, IonMenuButton ]
+  IonList,IonItem, RouterModule, IonLabel,RouterLink, IonSearchbar, IonButtons, IonMenuButton, IonAccordion ]
 })
 export class NotasPage implements OnInit {
   materiaId: number;
@@ -22,16 +23,20 @@ export class NotasPage implements OnInit {
   cortes: { [key: number]: Nota[] } = { 1: [], 2: [], 3: [], 4: [] };
   searchTerm: string = '';
   notasFiltradas: Nota[] = [];
+  materia?: Materia;
 
   constructor(private route: ActivatedRoute, private materiaService:MateriaService, private router:Router, private alertController: AlertController) { 
     this.materiaId = +this.route.snapshot.paramMap.get('id')!;
     this.loadNotas();
   }
 
+  
+
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(async params => {
       this.materiaId = +params['id'];
       console.log('Materia ID:', this.materiaId);
+      this.materia = (await this.materiaService.getMaterias()).find(m => m.id === this.materiaId);      
       this.loadNotas();
       this.notasFiltradas = this.notas;
     });

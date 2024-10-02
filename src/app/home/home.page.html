@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="custom-toolbar">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -8,5 +8,8 @@
 </ion-header>
 
 <ion-content>
-    <ion-button button (click)="irAMaterias()">Iniciar Aplicación</ion-button>
+  <div class="button-container">
+    <ion-button expand="block" shape="round" (click)="irAMaterias()">Iniciar Aplicación</ion-button>
+  </div>
 </ion-content>
+
