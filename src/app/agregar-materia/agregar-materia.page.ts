@@ -47,17 +47,23 @@ export class AgregarMateriaPage implements OnInit{
     }
   }
 
-  async agregarMateria() {
-    if (!this.validarCampos()) {
-      await this.mostrarAlerta('Error', 'Por favor, llene todos los campos obligatorios.');
-      return;
+async agregarMateria() {
+      if (!this.validarCampos()) {
+        alert('Por favor, llene todos los campos obligatorios.');
+        await this.mostrarAlerta('Error', 'Por favor, llene todos los campos obligatorios.');
+        return;
+      }
+      if (this.isEditMode) {
+        this.materiaService.updateMateria(this.materia);
+      } else {
+        this.materiaService.addMateria(this.materia);
+      const materiaAñadida = await this.materiaService.addMateria(this.materia);
+      if (!materiaAñadida) {
+        await this.mostrarAlerta('Error', 'El ID ya existe. Por favor, elija un ID diferente.');
+        return;
+      }
     }
-    const materiaAñadida = await this.materiaService.addMateria(this.materia);
-    if (!materiaAñadida) {
-      await this.mostrarAlerta('Error', 'El ID ya existe. Por favor, elija un ID diferente.');
-      return;
-    }
-    this.reiniciarForm();
+      this.reiniciarForm();
   }
 
   validarCampos(): boolean {

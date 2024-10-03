@@ -34,21 +34,21 @@ export class MateriaService {
   }
 
   // Obtener materias
-  async getMaterias(): Promise<Materia[]> {
-    return this.materias;
-  }
+  async getMaterias(): Promise<Materia[]>{
+    await this.loadMaterias();
+    return this.materias;  }
 
   // Añadir materia
-  async addMateria(materia: Materia): Promise<boolean> {
-    const materias = await this.getMaterias();
-    const idRepetido = materias.some(m => m.id === materia.id);
-    if (idRepetido) {
-      return false; 
+    async addMateria(materia: Materia): Promise<boolean> {
+      const materias = await this.getMaterias();
+      const idRepetido = materias.some(m => m.id === materia.id);
+      if (idRepetido) {
+        return false; 
+      }
+      this.materias.push(materia);
+      await this.updateStorage();
+      return true; 
     }
-    this.materias.push(materia);
-    await this.updateStorage();
-    return true; 
-  }
 
   // Actualizar materia
   async updateMateria(materia: Materia) {
